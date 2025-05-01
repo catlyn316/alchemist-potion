@@ -1,0 +1,83 @@
+-- 基本服務與玩家
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+
+
+
+-- GUI 主體
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+ScreenGui.Name = "MaolingHub"
+
+local Frame = Instance.new("Frame", ScreenGui)
+Frame.Size = UDim2.new(0, 400, 0, 300)
+Frame.Position = UDim2.new(0.3, 0, 0.3, 0)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.Active = true
+Frame.Draggable = true
+
+Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 10)
+
+local Title = Instance.new("TextLabel", Frame)
+Title.Size = UDim2.new(1, -70, 0, 40)
+Title.Position = UDim2.new(0, 10, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "貓玲的腳本區(>^ω^<) "
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 20
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local Close = Instance.new("TextButton", Frame)
+Close.Size = UDim2.new(0, 30, 0, 30)
+Close.Position = UDim2.new(1, -35, 0, 5)
+Close.Text = "X"
+Close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+Close.TextColor3 = Color3.fromRGB(255, 255, 255)
+Close.Font = Enum.Font.GothamBold
+Close.TextSize = 16
+Close.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
+
+local Minimize = Instance.new("TextButton", Frame)
+Minimize.Size = UDim2.new(0, 30, 0, 30)
+Minimize.Position = UDim2.new(1, -70, 0, 5)
+Minimize.Text = "-"
+Minimize.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+Minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
+Minimize.Font = Enum.Font.GothamBold
+Minimize.TextSize = 16
+
+local SideBar = Instance.new("Frame", Frame)
+SideBar.Size = UDim2.new(0, 100, 1, -40)
+SideBar.Position = UDim2.new(0, 0, 0, 40)
+SideBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+
+local Content = Instance.new("Frame", Frame)
+Content.Size = UDim2.new(1, -100, 1, -40)
+Content.Position = UDim2.new(0, 100, 0, 40)
+Content.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+
+-- 縮小功能
+local isMinimized = false
+local fullSize = UDim2.new(0, 400, 0, 300)
+local miniSize = UDim2.new(0, 400, 0, 40)
+Minimize.MouseButton1Click:Connect(function()
+	isMinimized = not isMinimized
+	SideBar.Visible = not isMinimized
+	Content.Visible = not isMinimized
+	Frame.Size = isMinimized and miniSize or fullSize
+end)
+
+
+-- 修改按鈕生成器讓它生成在 TPScroll 裡
+local function createButton(text, order, parent, spacing)
+	local btn = Instance.new("TextButton", parent)
+	btn.Size = UDim2.new(0, 250, 0, 30)
+	btn.Position = UDim2.new(0.5, -125, 0, 10 + (order - 1) * spacing)
+	btn.Text = text
+	btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btn.Font = Enum.Font.Gotham
+	btn.TextSize = 14
+	return btn
+end
