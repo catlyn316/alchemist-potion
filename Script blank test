@@ -3,7 +3,6 @@ local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
 
-
 -- GUI 主體
 local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
 ScreenGui.Name = "MaolingHub"
@@ -14,14 +13,13 @@ Frame.Position = UDim2.new(0.3, 0, 0.3, 0)
 Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 Frame.Active = true
 Frame.Draggable = true
-
 Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 10)
 
 local Title = Instance.new("TextLabel", Frame)
 Title.Size = UDim2.new(1, -70, 0, 40)
 Title.Position = UDim2.new(0, 10, 0, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "貓玲的腳本區(>^ω^<) "
+Title.Text = "貓玲的腳本區(>^ω^<)"
 Title.Font = Enum.Font.GothamBold
 Title.TextSize = 20
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -67,69 +65,51 @@ Minimize.MouseButton1Click:Connect(function()
 	Frame.Size = isMinimized and miniSize or fullSize
 end)
 
-local function createButtonWithInput(text, order, parent, spacing, callback)
-    -- 建立按鈕
-    local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 160, 0, 30)
-    btn.Position = UDim2.new(0.5, -125, 0, 10 + (order - 1) * spacing)
-    btn.Text = text
-    btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.Font = Enum.Font.Gotham
-    btn.TextSize = 14
-    btn.Parent = parent
+-- 建立按鈕與輸入框
+local function createButtonWithInput(text, order, parent, callback)
+	local container = Instance.new("Frame")
+	container.Size = UDim2.new(1, -10, 0, 30)
+	container.BackgroundTransparency = 1
+	container.LayoutOrder = order
+	container.Parent = parent
 
-local function createButtonWithInput(text, order, parent, spacing, callback)
-    -- 建立外框容器
-    local container = Instance.new("Frame")
-    container.Size = UDim2.new(1, -10, 0, 30)
-    container.BackgroundTransparency = 1
-    container.LayoutOrder = order
-    container.Parent = parent
+	local btn = Instance.new("TextButton")
+	btn.Size = UDim2.new(0, 160, 1, 0)
+	btn.Position = UDim2.new(0, 0, 0, 0)
+	btn.Text = text
+	btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btn.Font = Enum.Font.Gotham
+	btn.TextSize = 14
+	btn.Parent = container
 
-    -- 建立按鈕
-    local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 160, 1, 0)
-    btn.Position = UDim2.new(0, 0, 0, 0)
-    btn.Text = text
-    btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.Font = Enum.Font.Gotham
-    btn.TextSize = 14
-    btn.Parent = container
+	local inputBox = Instance.new("TextBox")
+	inputBox.Size = UDim2.new(0, 60, 1, 0)
+	inputBox.Position = UDim2.new(0, 170, 0, 0)
+	inputBox.Text = "1"
+	inputBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+	inputBox.Font = Enum.Font.Gotham
+	inputBox.TextSize = 14
+	inputBox.ClearTextOnFocus = false
+	inputBox.Parent = container
 
-    -- 建立輸入框
-    local inputBox = Instance.new("TextBox")
-    inputBox.Size = UDim2.new(0, 60, 1, 0)
-    inputBox.Position = UDim2.new(0, 100, 0, 0)
-    inputBox.Text = "1"
-    inputBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-    inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-    inputBox.Font = Enum.Font.Gotham
-    inputBox.TextSize = 14
-    inputBox.ClearTextOnFocus = false
-    inputBox.Parent = container
+	btn.MouseButton1Click:Connect(function()
+		local count = tonumber(inputBox.Text) or 1
+		for i = 1, count do
+			callback()
+		end
+	end)
 
-    btn.MouseButton1Click:Connect(function()
-        local count = tonumber(inputBox.Text) or 1
-        for i = 1, count do
-            callback()
-        end
-    end)
-
-    return btn, inputBox
+	return container
 end
 
-
-
-
--- 傳送分區使用 ScrollingFrame
+-- ScrollingFrame 與排版
 local EgglerScroll = Instance.new("ScrollingFrame", Content)
 EgglerScroll.Size = UDim2.new(1, 0, 1, 0)
-EgglerScroll.CanvasSize = UDim2.new(0, 0, 0, 385)  -- 高度設定視實際按鈕總高度
+EgglerScroll.CanvasSize = UDim2.new(0, 0, 0, 385)
 EgglerScroll.ScrollBarThickness = 6
 EgglerScroll.BackgroundTransparency = 1
-EgglerScroll.Visible = true
 EgglerScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 EgglerScroll.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 EgglerScroll.ScrollingDirection = Enum.ScrollingDirection.Y
@@ -138,11 +118,7 @@ local layout = Instance.new("UIListLayout", EgglerScroll)
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Padding = UDim.new(0, 5)
 
-
-
--- 分區按鈕
-
-
+-- 分區切換按鈕（目前預設顯示一個）
 local Section3 = Instance.new("TextButton", SideBar)
 Section3.Size = UDim2.new(1, 0, 0, 40)
 Section3.Position = UDim2.new(0, 0, 0, 0)
@@ -150,36 +126,28 @@ Section3.Text = "手套"
 Section3.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 Section3.TextColor3 = Color3.fromRGB(255, 255, 255)
 
+-- 功能定義
 G = {}
 
 function G.potion(ingredients)
-    -- 呼叫 GeneralAbility 的 FireServer
-    game:GetService("ReplicatedStorage"):WaitForChild("GeneralAbility"):FireServer()
-
-    local AlchemistEvent = game:GetService("ReplicatedStorage"):WaitForChild("AlchemistEvent")
-
-    -- 依序加入並混合所有材料
-    for _, item in ipairs(ingredients) do
-        AlchemistEvent:FireServer("AddItem", item)
-        AlchemistEvent:FireServer("MixItem", item)
-    end
-
-    -- 最後釀造藥水
-    AlchemistEvent:FireServer("BrewPotion")
+	game:GetService("ReplicatedStorage"):WaitForChild("GeneralAbility"):FireServer()
+	local AlchemistEvent = game:GetService("ReplicatedStorage"):WaitForChild("AlchemistEvent")
+	for _, item in ipairs(ingredients) do
+		AlchemistEvent:FireServer("AddItem", item)
+		AlchemistEvent:FireServer("MixItem", item)
+	end
+	AlchemistEvent:FireServer("BrewPotion")
 end
 
-
--- eggler手套分區
+-- 按鈕建立
 local EgglerButtons = {
-	createButtonWithInput("1", 1, EgglerScroll, function()
+	createButtonWithInput("惡夢藥", 1, EgglerScroll, function()
 		G.potion{"Dark Root", "Dark Root", "Dark Root"}
 	end),
-
-	createButtonWithInput("2", 2, EgglerScroll, function()
+	createButtonWithInput("麻痹藥", 2, EgglerScroll, function()
 		G.potion{"Plane Flower", "Plane Flower"}
 	end)
 }
-
 
 
 -- 初始化時顯示分區的按鈕
