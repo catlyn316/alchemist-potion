@@ -68,19 +68,41 @@ Minimize.MouseButton1Click:Connect(function()
 	Frame.Size = isMinimized and miniSize or fullSize
 end)
 
+local function createButtonWithInput(text, order, parent, spacing, callback)
+    -- 建立按鈕
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, 180, 0, 30)
+    btn.Position = UDim2.new(0.5, -125, 0, 10 + (order - 1) * spacing)
+    btn.Text = text
+    btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.Gotham
+    btn.TextSize = 14
+    btn.Parent = parent
 
--- 修改按鈕生成器讓它生成在 TPScroll 裡
-local function createButton(text, order, parent, spacing)
-	local btn = Instance.new("TextButton", parent)
-	btn.Size = UDim2.new(0, 250, 0, 30)
-	btn.Position = UDim2.new(0.5, -125, 0, 10 + (order - 1) * spacing)
-	btn.Text = text
-	btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
-	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-	btn.Font = Enum.Font.Gotham
-	btn.TextSize = 14
-	return btn
+    -- 建立輸入框（數字輸入）
+    local inputBox = Instance.new("TextBox")
+    inputBox.Size = UDim2.new(0, 60, 0, 30)
+    inputBox.Position = UDim2.new(0, btn.Position.X.Offset + btn.Size.X.Offset + 5, 0, btn.Position.Y.Offset)
+    inputBox.Text = "1"
+    inputBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    inputBox.Font = Enum.Font.Gotham
+    inputBox.TextSize = 14
+    inputBox.ClearTextOnFocus = false
+    inputBox.Parent = parent
+
+    -- 按下按鈕時，重複執行 callback
+    btn.MouseButton1Click:Connect(function()
+        local count = tonumber(inputBox.Text) or 1
+        for i = 1, count do
+            callback()
+        end
+    end)
+
+    return btn, inputBox
 end
+
 
 
 -- 傳送分區使用 ScrollingFrame
@@ -105,25 +127,36 @@ Section3.Text = "手套"
 Section3.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 Section3.TextColor3 = Color3.fromRGB(255, 255, 255)
 
+G = {}
 
+function G.potion(ingredients)
+    -- 呼叫 GeneralAbility 的 FireServer
+    game:GetService("ReplicatedStorage"):WaitForChild("GeneralAbility"):FireServer()
+
+    local AlchemistEvent = game:GetService("ReplicatedStorage"):WaitForChild("AlchemistEvent")
+
+    -- 依序加入並混合所有材料
+    for _, item in ipairs(ingredients) do
+        AlchemistEvent:FireServer("AddItem", item)
+        AlchemistEvent:FireServer("MixItem", item)
+    end
+
+    -- 最後釀造藥水
+    AlchemistEvent:FireServer("BrewPotion")
+end
 
 -- eggler手套分區
 local EgglerButtons = {
-	createButton("1", 1, EgglerScroll, 35),
-	createButton("2", 2, EgglerScroll, 35),
-	createButton("3", 3, EgglerScroll, 35)
+	createButtonWithInput("1", 1, EgglerScroll, 35)
 }
 -- 初始化時顯示分區的按鈕
 for _, b in ipairs(EgglerButtons) do b.Visible = true end
 
 EgglerButtons[1].MouseButton1Click:Connect(function()
+G.potion{"Dark Root", "Dark Root", "Dark Root"}
 end)
 
-EgglerButtons[2].MouseButton1Click:Connect(function()
-end)
 
-EgglerButtons[3].MouseButton1Click:Connect(function()
-end)
 
 
 
