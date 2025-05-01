@@ -171,10 +171,15 @@ end
 
 -- eggler手套分區
 local EgglerButtons = {
-	createButtonWithInput("1", 1, EgglerScroll, 35, function()
+	createButtonWithInput("1", 1, EgglerScroll, function()
 		G.potion{"Dark Root", "Dark Root", "Dark Root"}
+	end),
+
+	createButtonWithInput("2", 2, EgglerScroll, function()
+		G.potion{"Plane Flower", "Plane Flower"}
 	end)
 }
+
 
 
 -- 初始化時顯示分區的按鈕
