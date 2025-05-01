@@ -144,8 +144,6 @@ function G.potion(ingredients)
     AlchemistEvent:FireServer("BrewPotion")
 end
 
--- 初始化時顯示分區的按鈕
-for _, b in ipairs(EgglerButtons) do b.Visible = true end
 
 -- eggler手套分區
 local EgglerButtons = {
@@ -155,7 +153,8 @@ local EgglerButtons = {
 }
 
 
-
+-- 初始化時顯示分區的按鈕
+for _, b in ipairs(EgglerButtons) do b.Visible = true end
 
 
 
