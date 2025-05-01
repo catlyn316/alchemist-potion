@@ -79,19 +79,37 @@ local function createButtonWithInput(text, order, parent, spacing, callback)
     btn.TextSize = 14
     btn.Parent = parent
 
-    -- 建立輸入框（數字輸入）
+local function createButtonWithInput(text, order, parent, spacing, callback)
+    -- 建立外框容器
+    local container = Instance.new("Frame")
+    container.Size = UDim2.new(1, -10, 0, 30)
+    container.BackgroundTransparency = 1
+    container.LayoutOrder = order
+    container.Parent = parent
+
+    -- 建立按鈕
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, 160, 1, 0)
+    btn.Position = UDim2.new(0, 0, 0, 0)
+    btn.Text = text
+    btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.Gotham
+    btn.TextSize = 14
+    btn.Parent = container
+
+    -- 建立輸入框
     local inputBox = Instance.new("TextBox")
-    inputBox.Size = UDim2.new(0, 60, 0, 30)
-    inputBox.Position = UDim2.new(0, btn.Position.X.Offset + btn.Size.X.Offset + 25, 0, btn.Position.Y.Offset)
+    inputBox.Size = UDim2.new(0, 60, 1, 0)
+    inputBox.Position = UDim2.new(0, 170, 0, 0)
     inputBox.Text = "1"
     inputBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
     inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
     inputBox.Font = Enum.Font.Gotham
     inputBox.TextSize = 14
     inputBox.ClearTextOnFocus = false
-    inputBox.Parent = parent
+    inputBox.Parent = container
 
-    -- 按下按鈕時，重複執行 callback
     btn.MouseButton1Click:Connect(function()
         local count = tonumber(inputBox.Text) or 1
         for i = 1, count do
@@ -101,6 +119,7 @@ local function createButtonWithInput(text, order, parent, spacing, callback)
 
     return btn, inputBox
 end
+
 
 
 
@@ -114,6 +133,11 @@ EgglerScroll.Visible = true
 EgglerScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 EgglerScroll.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 EgglerScroll.ScrollingDirection = Enum.ScrollingDirection.Y
+
+local layout = Instance.new("UIListLayout", EgglerScroll)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Padding = UDim.new(0, 5)
+
 
 
 -- 分區按鈕
