@@ -81,3 +81,52 @@ local function createButton(text, order, parent, spacing)
 	btn.TextSize = 14
 	return btn
 end
+
+
+-- 傳送分區使用 ScrollingFrame
+local EgglerScroll = Instance.new("ScrollingFrame", Content)
+EgglerScroll.Size = UDim2.new(1, 0, 1, 0)
+EgglerScroll.CanvasSize = UDim2.new(0, 0, 0, 385)  -- 高度設定視實際按鈕總高度
+EgglerScroll.ScrollBarThickness = 6
+EgglerScroll.BackgroundTransparency = 1
+EgglerScroll.Visible = true
+EgglerScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+EgglerScroll.VerticalScrollBarInset = Enum.ScrollBarInset.ScrollBar
+EgglerScroll.ScrollingDirection = Enum.ScrollingDirection.Y
+
+
+-- 分區按鈕
+
+
+local Section3 = Instance.new("TextButton", SideBar)
+Section3.Size = UDim2.new(1, 0, 0, 40)
+Section3.Position = UDim2.new(0, 0, 0, 0)
+Section3.Text = "手套"
+Section3.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+Section3.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+
+
+-- eggler手套分區
+local EgglerButtons = {
+	createButton("1", 1, EgglerScroll, 35),
+	createButton("2", 2, EgglerScroll, 35),
+	createButton("3", 3, EgglerScroll, 35)
+}
+-- 初始化時顯示分區的按鈕
+for _, b in ipairs(EgglerButtons) do b.Visible = true end
+
+EgglerButtons[1].MouseButton1Click:Connect(function()
+end)
+
+EgglerButtons[2].MouseButton1Click:Connect(function()
+end)
+
+EgglerButtons[3].MouseButton1Click:Connect(function()
+end)
+
+
+
+
+
+
