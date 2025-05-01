@@ -71,7 +71,7 @@ end)
 local function createButtonWithInput(text, order, parent, spacing, callback)
     -- 建立按鈕
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 180, 0, 30)
+    btn.Size = UDim2.new(0, 160, 0, 30)
     btn.Position = UDim2.new(0.5, -125, 0, 10 + (order - 1) * spacing)
     btn.Text = text
     btn.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
@@ -83,7 +83,7 @@ local function createButtonWithInput(text, order, parent, spacing, callback)
     -- 建立輸入框（數字輸入）
     local inputBox = Instance.new("TextBox")
     inputBox.Size = UDim2.new(0, 60, 0, 30)
-    inputBox.Position = UDim2.new(0, btn.Position.X.Offset + btn.Size.X.Offset + 5, 0, btn.Position.Y.Offset)
+    inputBox.Position = UDim2.new(0, btn.Position.X.Offset + btn.Size.X.Offset + 25, 0, btn.Position.Y.Offset)
     inputBox.Text = "1"
     inputBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
     inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -145,16 +145,16 @@ function G.potion(ingredients)
     AlchemistEvent:FireServer("BrewPotion")
 end
 
--- eggler手套分區
-local EgglerButtons = {
-	createButtonWithInput("1", 1, EgglerScroll, 35)
-}
 -- 初始化時顯示分區的按鈕
 for _, b in ipairs(EgglerButtons) do b.Visible = true end
 
-EgglerButtons[1].MouseButton1Click:Connect(function()
-G.potion{"Dark Root", "Dark Root", "Dark Root"}
-end)
+-- eggler手套分區
+local EgglerButtons = {
+	createButtonWithInput("1", 1, EgglerScroll, 35, function()
+		G.potion{"Dark Root", "Dark Root", "Dark Root"}
+	end)
+}
+
 
 
 
