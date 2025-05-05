@@ -159,6 +159,24 @@ local EgglerButtons = {
 	createButtonWithInput("grug藥", 6, EgglerScroll, function()
 		G.potion{"Mushroom"}
 	end),
+	createButtonWithInput("力量藥", 7, EgglerScroll, function()
+		G.potion{"Dire Flower", "Red Crystal", "Wild Vine"}
+	end),
+	createButtonWithInput("手套速度藥", 8, EgglerScroll, function()
+		G.potion{"Autumn Sprout", "Jade Stone"}
+	end),
+	createButtonWithInput("隱身藥", 9, EgglerScroll, function()
+		G.potion{"Hazel Lily", "Hazel Lily", "Blue Crystal"}
+	end),
+	createButtonWithInput("無敵藥", 10, EgglerScroll, function()
+		G.potion{"Mushroom", "Mushroom", "Elder Wood"}
+	end),
+	createButtonWithInput("毒藥", 11, EgglerScroll, function()
+		G.potion{"Blood Rose", "Red Crystal"}
+	end),
+	createButtonWithInput("解毒藥", 12, EgglerScroll, function()
+		G.potion{"Plane Flower", "Red Crystal"}
+	end),
 }
 
 
