@@ -122,7 +122,7 @@ layout.Padding = UDim.new(0, 5)
 local Section3 = Instance.new("TextButton", SideBar)
 Section3.Size = UDim2.new(1, 0, 0, 40)
 Section3.Position = UDim2.new(0, 0, 0, 0)
-Section3.Text = "鍊金19藥水"
+Section3.Text = "鍊金藥水"
 Section3.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 Section3.TextColor3 = Color3.fromRGB(255, 255, 255)
 
@@ -175,8 +175,20 @@ local EgglerButtons = {
 		G.potion{"Blood Rose", "Red Crystal"}
 	end),
 	createButtonWithInput("解毒藥", 12, EgglerScroll, function()
-		G.potion{"Plane Flower", "Red Crystal"}
+		G.potion{"Plane Flower", "Plane Flower", "Blue Crystal", "Elder Wood", "Glowing Mushroom"}
 	end),
+	createButtonWithInput("輕盈藥", 13, EgglerScroll, function()
+		G.potion{"Hazel Lily", "Mushroom"}
+	end),
+	createButtonWithInput("玩家速度藥", 14, EgglerScroll, function()
+		G.potion{"Mushroom", "Mushroom", "Blue Crystal", "Hazel Lily", "Plane Flower"}
+	end),
+	createButtonWithInput("秒殺藥", 15, EgglerScroll, function()
+		G.potion{"Blood Rose", "Dark Root", "Blood Rose", "Dark Root", "Blood Rose", "Dark Root", "Blood Rose", "Dark Root", "Blood Rose", "Dark Root", "Blood Rose", "Dark Root", "Blood Rose", "Dark Root", "Blood Rose", "Dark Root", "Blood Rose", "Dark Root", "Blood Rose", "Dark Root"}
+	end),
+	createButtonWithInput("緩慢藥", 16, EgglerScroll, function()
+		G.potion{"Blue Crystal", "Mushroom", "Blue Crystal", "Jade Stone", "Plane Flower", "Mushroom"}
+	end)
 }
 
 
