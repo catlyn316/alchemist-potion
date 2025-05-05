@@ -146,7 +146,19 @@ local EgglerButtons = {
 	end),
 	createButtonWithInput("麻痹藥", 2, EgglerScroll, function()
 		G.potion{"Plane Flower", "Plane Flower"}
-	end)
+	end),
+	createButtonWithInput("困惑藥", 3, EgglerScroll, function()
+		G.potion{"Blue Crystal", "Red Crystal", "Glowing Mushroom"}
+	end),
+	createButtonWithInput("爆炸藥", 4, EgglerScroll, function()
+		G.potion{"Red Crystal", "Fire Flower", "Fire Flower"}
+	end),
+	createButtonWithInput("冰凍藥", 5, EgglerScroll, function()
+		G.potion{"Winter Rose", "Winter Rose", "Blue Crystal", "Glowing Mushroom", "Wild Vine"}
+	end),
+	createButtonWithInput("grug藥", 6, EgglerScroll, function()
+		G.potion{"Mushroom"}
+	end),
 }
 
 
