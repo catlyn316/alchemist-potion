@@ -118,13 +118,24 @@ local layout = Instance.new("UIListLayout", EgglerScroll)
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 layout.Padding = UDim.new(0, 5)
 
--- 分區切換按鈕（目前預設顯示一個）
-local Section3 = Instance.new("TextButton", SideBar)
-Section3.Size = UDim2.new(1, 0, 0, 40)
-Section3.Position = UDim2.new(0, 0, 0, 0)
-Section3.Text = "鍊金常用藥水"
-Section3.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-Section3.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- 分區切換按鈕
+local Section1 = Instance.new("TextButton", SideBar)
+Section1.Size = UDim2.new(1, 0, 0, 40)
+Section1.Position = UDim2.new(0, 0, 0, 0)
+Section1.Text = "鍊金藥水"
+Section1.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+Section1.TextColor3 = Color3.fromRGB(255, 255, 255)
+Section1.Font = Enum.Font.Gotham
+Section1.TextSize = 14
+
+local Section2 = Instance.new("TextButton", SideBar)
+Section2.Size = UDim2.new(1, 0, 0, 40)
+Section2.Position = UDim2.new(0, 0, 0, 45)
+Section2.Text = "傳送用藥水"
+Section2.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+Section2.TextColor3 = Color3.fromRGB(255, 255, 255)
+Section2.Font = Enum.Font.Gotham
+Section2.TextSize = 14
 
 -- 功能定義
 G = {}
@@ -139,8 +150,8 @@ function G.potion(ingredients)
 	AlchemistEvent:FireServer("BrewPotion")
 end
 
--- 按鈕建立
-local EgglerButtons = {
+-- 第一區按鈕 - 鍊金藥水
+local AlchemyButtons = {
 	createButtonWithInput("惡夢藥", 1, EgglerScroll, function()
 		G.potion{"Dark Root", "Dark Root", "Dark Root"}
 	end),
@@ -191,9 +202,58 @@ local EgglerButtons = {
 	end)
 }
 
+-- 第二區按鈕 - 傳送用藥水
+local TeleportButtons = {
+	createButtonWithInput("藤蔓", 1, EgglerScroll, function()
+		G.potion{"Wild Vine", "Wild Vine", "Wild Vine", "Jade Stone", "Blood Rose", "Dark Root", "Elder Wood"}
+	end),
+	createButtonWithInput("鎌刀", 2, EgglerScroll, function()
+		G.potion{"Plane Flower", "Plame Flower", "Hazel Lily"}
+	end),
+	createButtonWithInput("鎖鏈", 3, EgglerScroll, function()
+		G.potion{"Red Crystal", "Blue Crystal", "Elder Wood", "Elder Wood", "Elder Wood"} -- 空白的G.potion函式，等待後續填入
+	end)
+}
 
--- 初始化時顯示分區的按鈕
-for _, b in ipairs(EgglerButtons) do b.Visible = true end
+-- 分區切換功能
+local function showSection(sectionName)
+	-- 隱藏所有按鈕
+	for _, btn in ipairs(AlchemyButtons) do
+		btn.Visible = false
+	end
+	for _, btn in ipairs(TeleportButtons) do
+		btn.Visible = false
+	end
+	
+	-- 重置按鈕顏色
+	Section1.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	Section2.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	
+	-- 顯示對應分區的按鈕並高亮選中的分區
+	if sectionName == "alchemy" then
+		for _, btn in ipairs(AlchemyButtons) do
+			btn.Visible = true
+		end
+		Section1.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+	elseif sectionName == "teleport" then
+		for _, btn in ipairs(TeleportButtons) do
+			btn.Visible = true
+		end
+		Section2.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+	end
+end
+
+-- 按鈕點擊事件
+Section1.MouseButton1Click:Connect(function()
+	showSection("alchemy")
+end)
+
+Section2.MouseButton1Click:Connect(function()
+	showSection("teleport")
+end)
+
+-- 初始化時顯示第一個分區
+showSection("alchemy")
 
 
 
