@@ -199,6 +199,12 @@ local AlchemyButtons = {
 	end),
 	createButtonWithInput("緩慢藥", 16, EgglerScroll, function()
 		G.potion{"Blue Crystal", "Mushroom", "Blue Crystal", "Jade Stone", "Plane Flower", "Mushroom"}
+	end),
+	createButtonWithInput("麵粉", 17, EgglerScroll, function()
+		local args = {
+    [1] = "AddItem",
+    [2] = "Cake Mix"
+}
 	end)
 }
 
@@ -208,7 +214,7 @@ local TeleportButtons = {
 		G.potion{"Wild Vine", "Wild Vine", "Wild Vine", "Jade Stone", "Blood Rose", "Dark Root", "Elder Wood"}
 	end),
 	createButtonWithInput("鎌刀", 2, EgglerScroll, function()
-		G.potion{"Plane Flower", "Plame Flower", "Hazel Lily"}
+		G.potion{"Plane Flower", "Plane Flower", "Hazel Lily"}
 	end),
 	createButtonWithInput("鎖鏈", 3, EgglerScroll, function()
 		G.potion{"Red Crystal", "Blue Crystal", "Elder Wood", "Elder Wood", "Elder Wood"} -- 空白的G.potion函式，等待後續填入
