@@ -199,12 +199,6 @@ local AlchemyButtons = {
 	end),
 	createButtonWithInput("緩慢藥", 16, EgglerScroll, function()
 		G.potion{"Blue Crystal", "Mushroom", "Blue Crystal", "Jade Stone", "Plane Flower", "Mushroom"}
-	end),
-	createButtonWithInput("麵粉", 17, EgglerScroll, function()
-		local args = {
-    [1] = "AddItem",
-    [2] = "Cake Mix"
-}
 	end)
 }
 
