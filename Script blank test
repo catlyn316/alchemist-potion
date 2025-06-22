@@ -19,7 +19,7 @@ local Title = Instance.new("TextLabel", Frame)
 Title.Size = UDim2.new(1, -70, 0, 40)
 Title.Position = UDim2.new(0, 10, 0, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "貓玲的腳本區(>^ω^<)"
+Title.Text = "貓玲的腳本區(>^ω^<)鍊金藥水"
 Title.Font = Enum.Font.GothamBold
 Title.TextSize = 20
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -86,7 +86,7 @@ local function createButtonWithInput(text, order, parent, callback)
 	local inputBox = Instance.new("TextBox")
 	inputBox.Size = UDim2.new(0, 60, 1, 0)
 	inputBox.Position = UDim2.new(0, 170, 0, 0)
-	inputBox.Text = "1"
+	inputBox.Text = "20"
 	inputBox.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 	inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 	inputBox.Font = Enum.Font.Gotham
